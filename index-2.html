@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free AI Image Generator (Pollinations)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      line-height: 1.5;
+    }
+    h1 {
+      margin-bottom: 0.5rem;
+    }
+    input[type="text"] {
+      width: 80%;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      margin-left: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    #output {
+      margin-top: 1rem;
+    }
+    img, video {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+    }
+    #status {
+      margin-top: 0.5rem;
+      color: #d00;
+    }
+  </style>
+</head>
+<body>
+  <h1>Free AI Image Generator (Pollinations)</h1>
+  <p>
+    This simple generator uses the open‑source
+    <strong>Pollinations</strong> image API. Pollinations is a free
+    AI image and text generation platform that doesn’t require any
+    sign‑ups or API keys【986009091136178†L25-L27】【458422648097283†L4-L8】.
+    It provides a straightforward REST endpoint for text‑to‑image generation
+    and is part of a privacy‑first, open‑source ecosystem【458422648097283†L60-L64】.
+  </p>
+  <p>
+    To generate an image, enter a description below and click
+    <em>Generate Image</em>. The image is fetched from the Pollinations
+    API using the format
+    <code>https://image.pollinations.ai/prompt/&lt;your prompt&gt;</code>.
+    Note that Pollinations currently offers image generation only. At this
+    time there isn’t a reliable, no‑signup free API for video generation
+    like Sora; we’ve checked and most services require sign‑ups or tokens.
+  </p>
+  <label for="prompt">Prompt:</label><br />
+  <input type="text" id="prompt" placeholder="Describe what you want to see…" /><button id="generate">Generate Image</button>
+  <div id="status"></div>
+  <div id="output"></div>
+  <script>
+    /**
+     * Build a Pollinations API URL for the given prompt.
+     * Adds a timestamp to avoid browser caching.
+     * @param {string} prompt
+     * @returns {string} URL
+     */
+    function buildPollinationsUrl(prompt) {
+      const encoded = encodeURIComponent(prompt);
+      // Append a query parameter to prevent caching
+      return `https://image.pollinations.ai/prompt/${encoded}?rand=${Date.now()}`;
+    }
+
+    document.getElementById('generate').addEventListener('click', () => {
+      const prompt = document.getElementById('prompt').value.trim();
+      const status = document.getElementById('status');
+      const output = document.getElementById('output');
+      status.textContent = '';
+      output.innerHTML = '';
+      if (!prompt) {
+        status.textContent = 'Please enter a description for the image.';
+        return;
+      }
+      status.textContent = 'Generating…';
+      const img = document.createElement('img');
+      img.src = buildPollinationsUrl(prompt);
+      img.alt = prompt;
+      // Clear status once the image is successfully loaded
+      img.onload = () => {
+        status.textContent = '';
+      };
+      img.onerror = () => {
+        status.textContent = 'Failed to load image. The Pollinations service may be unavailable. Please try again later or adjust your prompt.';
+      };
+      output.appendChild(img);
+    });
+  </script>
+</body>
+</html>
