@@ -1,0 +1,4 @@
+Free AI Image Generator (Pollinations)
+This simple generator uses the open‑source Pollinations image API. Pollinations is a free AI image and text generation platform that doesn’t require any sign‑ups or API keys【986009091136178†L25-L27】【458422648097283†L4-L8】. It provides a straightforward REST endpoint for text‑to‑image generation and is part of a privacy‑first, open‑source ecosystem【458422648097283†L60-L64】.
+
+To generate an image, enter a description below and click Generate Image. The image is fetched from the Pollinations API using the format https://image.pollinations.ai/prompt/<your prompt>. Note that Pollinations currently offers image generation only. At this time there isn’t a reliable, no‑signup free API for video generation like Sora; we’ve checked and most services require sign‑ups or tokens.
